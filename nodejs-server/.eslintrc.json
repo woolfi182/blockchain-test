@@ -1,0 +1,59 @@
+{
+  "env": {
+    "node": true,
+    "es2021": true
+  },
+  "extends": [
+    "prettier",
+    "plugin:prettier/recommended",
+    "plugin:promise/recommended"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "plugins": ["prettier", "promise"],
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "rules": {
+    "quotes": ["error", "double", { "allowTemplateLiterals": true }],
+    "max-len": [
+      "error",
+      {
+        "ignoreUrls": true,
+        "ignoreRegExpLiterals": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreComments": true,
+        "ignoreStrings": true,
+        "ignorePattern": "^import\\s.+\\sfrom\\s.+;$",
+        "code": 80
+      }
+    ],
+    "indent": [
+      "error",
+      2,
+      { "offsetTernaryExpressions": true, "SwitchCase": 1 }
+    ],
+    "max-classes-per-file": ["off"],
+    "class-methods-use-this": ["off"],
+    "object-shorthand": ["error", "always"],
+    "prefer-destructuring": ["error", { "object": true, "array": false }],
+    "no-unused-expressions": ["error", { "allowTernary": true }],
+    "no-unused-vars": [
+      "error",
+      { "vars": "local", "args": "after-used", "argsIgnorePattern": "^_" }
+    ],
+    "object-property-newline": [
+      "error",
+      { "allowAllPropertiesOnSameLine": true }
+    ],
+    "linebreak-style": ["error", "unix"],
+    "semi": ["error", "always"],
+    "func-names": "off",
+    "consistent-return": "warn",
+    "no-underscore-dangle": "warn",
+    "no-bitwise": "warn"
+  }
+}
