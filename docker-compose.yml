@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=verysecretpassword
+      - POSTGRES_USER=tessera
+      - POSTGRES_DB=tessera
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./volumes/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 2s
+      timeout: 60s
+      retries: 5
+      start_period: 80s  
+
+
+  node-server:
+    build: nodejs-server
+    restart: always
+    ports:
+      - 3001:3001
+    environment:
+      - PORT=3000
+      - PG_HOST=host.docker.internal
+      - PG_PORT=5432
+      - PG_DB=tessera
+      - PG_USER=tessera
+      - PG_PASSWORD=verysecretpassword
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./nodejs-server/:/app
