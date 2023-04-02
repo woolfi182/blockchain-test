@@ -15,6 +15,8 @@ const main = async () => {
   await dbProvider.connect();
   await ethProvider.connect();
 
+  dbProvider.initModels();
+
   const trxService = new TrxService(dbProvider.db);
   const ethService = new EthService(ethProvider.provider, trxService);
 
