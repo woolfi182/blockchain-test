@@ -50,6 +50,7 @@ const main = async () => {
     await Promise.all(
       daiTransactions.map(async (trx) => {
         const { transactionHash } = trx;
+        console.log("trx from block", trx);
         const data = await provider.getTransaction(transactionHash);
         /*
           trx data example:
@@ -75,7 +76,6 @@ const main = async () => {
             v: 1,
             creates: null,
             chainId: 1,
-            wait: [Function (anonymous)]
           }
         */
         console.log("trx data", data);
