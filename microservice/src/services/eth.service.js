@@ -96,17 +96,24 @@ module.exports = class EthService {
           blockHash: trxData.blockHash,
           blockNumber: trxData.blockNumber,
           transactionIndex: trxData.transactionIndex,
-          from: trxData.from,
           gasPrice: ethers.utils.formatEther(trxData.gasPrice),
           gasLimit: ethers.utils.formatEther(trxData.gasLimit),
-          to: trxData.to,
           value: ethers.utils.formatEther(trxData.value),
           nonce: trxData.nonce,
+          sender: trxData.from,
+          recipient: trxData.to,
+          senderBalance: await this.getBalance(trxData.from),
+          recipientBalance: await this.getBalance(trxData.to),
         };
 
         // save to DB
         await this.trxService.saveTransaction(toSaveData);
       })
     );
+  }
+
+  async getBalance(address) {
+    const balance = await this.provider.getBalance(address);
+    return ethers.utils.formatEther(balance);
   }
 };

@@ -19,11 +19,19 @@ module.exports = (sequelize) => {
       type: DataTypes.SMALLINT,
       allowNull: false,
     },
-    from: {
+    sender: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    to: {
+    senderBalance: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    recipient: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    recipientBalance: {
       type: DataTypes.STRING,
       allowNull: false,
     },

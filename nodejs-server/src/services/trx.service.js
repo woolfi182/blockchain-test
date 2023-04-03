@@ -20,7 +20,6 @@ module.exports = class TrxService {
       limit: 100,
       offset: page * LIMIT,
       order: [[orderBy, "DESC"]],
-      group: [orderBy],
     };
 
     return this.db.models.TrxModel.findAll(params);
