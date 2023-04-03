@@ -3,12 +3,12 @@
 ###
 # Get Transactions
 # @name trxs
-GET {{server}}/transactions
+GET {{server}}/api/v1/transactions
 x-api-key: key1
 
 
 @address={{trxs.response.body.data.transactions[0].sender}}
 ###
 # Get balance
-GET {{server}}/balance/{{address}}
+GET {{server}}/api/v1/balance/{{address}}
 x-api-key: key2

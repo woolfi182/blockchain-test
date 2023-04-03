@@ -17,7 +17,7 @@ router.get("/:address", async (req, res, next) => {
     return res.json({
       success: true,
       data: {
-        address: addressData,
+        addressBalance: addressData,
       },
     });
   } catch (error) {
