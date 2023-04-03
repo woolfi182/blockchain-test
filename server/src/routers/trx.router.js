@@ -1,20 +1,7 @@
 const { Router } = require("express");
+const { isValidPage, isValidSort } = require("../helpers");
 
 const router = new Router();
-
-const sortValues = ["recipient", "sender"];
-
-// For testing purposes basic validation is here
-const validatePage = (page) => {
-  if (isNaN(Number(page))) {
-    throw new Error("Page parameter should be number");
-  }
-};
-const validateSort = (sort) => {
-  if (!sortValues.includes(sort)) {
-    throw new Error(`Sort could include only next values: ${sortValues}`);
-  }
-};
 
 // For task purposes simple try/catch (should be moved up)
 router.get("/", async (req, res, next) => {
@@ -25,8 +12,8 @@ router.get("/", async (req, res, next) => {
   const { sort = "sender" } = req.query;
 
   try {
-    validatePage(page);
-    validateSort(sort);
+    isValidPage(page);
+    isValidSort(sort);
 
     const latestTrx = await trxService.getTransactions(page, sort);
     return res.json({
@@ -36,7 +23,6 @@ router.get("/", async (req, res, next) => {
       },
     });
   } catch (error) {
-    console.log("Error", error);
     return next(error);
   }
 });

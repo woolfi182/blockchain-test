@@ -140,21 +140,12 @@ paths:
                   addressBalance:
                     type: object
                     properties:
-                      id:
-                        type: integer
-                        description: The unique identifier of the transaction
                       hash:
                         type: string
                         description: The hash of the transaction
-                      blockHash:
-                        type: string
-                        description: The hash of the block containing the transaction
                       blockNumber:
                         type: string
                         description: The number of the block containing the transaction
-                      transactionIndex:
-                        type: integer
-                        description: The index of the transaction in the block
                       sender:
                         type: string
                         description: The address of the sender
@@ -167,21 +158,3 @@ paths:
                       recipientBalance:
                         type: string
                         description: The balance of the recipient after the transaction
-                      gasPrice:
-                        type: string
-                        description: The gas price of the transaction
-                      gasLimit:
-                        type: string
-                        description: The gas limit of the transaction
-                      value:
-                        type: string
-                        description: The value of the transaction
-                      nonce:
-                        type: integer
-                        description: The nonce of the transaction
-                      createdAt:
-                        type: string
-                        description: The timestamp when the transaction was created
-                      updatedAt:
-                        type: string
-                        description: The timestamp when the transaction was last updated

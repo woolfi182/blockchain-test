@@ -9,6 +9,7 @@ const { DbProvider } = require("./providers");
 const { TrxService, LogsService } = require("./services");
 const { trxRouter, balanceRouter } = require("./routers");
 const { apiLimiter, apiAuthentication, logRequest } = require("./middlewares");
+const { errorHandler } = require("./helpers");
 
 const { PORT } = process.env;
 
@@ -54,6 +55,7 @@ const main = async () => {
   // GENERAL logic
   app.use("/api/v1/transactions", trxRouter);
   app.use("/api/v1/balance", balanceRouter);
+  app.use(errorHandler);
 
   app.listen(PORT, () => {
     console.log(`Example app listening at http://localhost:${PORT}`);

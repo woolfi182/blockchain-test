@@ -19,6 +19,14 @@ module.exports = class TrxService {
 
   async getBalance(address) {
     const params = {
+      attributes: [
+        "hash",
+        "blockNumber",
+        "sender",
+        "senderBalance",
+        "recipient",
+        "recipientBalance",
+      ],
       where: {
         [Sequelize.Op.or]: [{ sender: address }, { recipient: address }],
       },

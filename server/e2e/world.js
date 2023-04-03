@@ -7,7 +7,13 @@ const {
 const axios = require("axios");
 require("dotenv").config();
 
-const { API_PORT, API_KEY, TEST_CASE_TIMEOUT } = process.env;
+const {
+  API_PORT,
+  API_KEY,
+  TEST_CASE_TIMEOUT,
+  TEST_RECIPIENT_ADDRESS,
+  TEST_SENDER_ADDRESS,
+} = process.env;
 const DEFAULT_TIMEOUT = TEST_CASE_TIMEOUT * 1000;
 
 const baseUrl = `http://localhost:${API_PORT}`;
@@ -16,6 +22,8 @@ class CustomWorld extends World {
     super(opts);
     this.response = {};
     this.headers = {};
+    this.recipientAddress = TEST_RECIPIENT_ADDRESS;
+    this.senderAddress = TEST_SENDER_ADDRESS;
   }
 
   async createReqClient() {

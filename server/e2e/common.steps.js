@@ -37,53 +37,6 @@ When("make {word} request to: {}", async function (method, url) {
   });
 });
 
-When(
-  "request {word} to {} with body {}",
-  async function (method, path, bodyRaw) {
-    if (/\{/.test(path)) {
-      const keys = (path.match(/\{(\w+)\}/g) || []).map((el) => ({
-        key: el,
-        val: this[el.replace(/\{|\}/g, "")],
-      }));
-
-      keys.forEach((el) => {
-        path = path.replace(el.key, el.val); // eslint-disable-line no-param-reassign
-      });
-    }
-
-    const data = {
-      method,
-      url: path,
-    };
-
-    if (["POST", "PUT", "PATCH"].includes(method)) {
-      if (bodyRaw && isValidJson(bodyRaw)) {
-        const body = JSON.parse(bodyRaw);
-        const newBody = {};
-
-        Object.entries(body).forEach(([key, val]) => {
-          if (/\{/.test(val)) {
-            const valKey = val.match(/\{(.+)\}/)[1];
-            newBody[key] = val.replace(`{${valKey}}`, this[valKey]);
-            return;
-          }
-          newBody[key] = val;
-        });
-
-        data.data = newBody;
-      } else {
-        // use invalid JSON for testing
-        data.data = bodyRaw;
-      }
-      data.headers = {
-        "Content-Type": "application/json",
-      };
-    }
-
-    await this.makeRequest(data);
-  },
-);
-
 When("request {word} to {} without body", async function (method, path) {
   if (/\{/.test(path)) {
     const keys = (path.match(/\{(\w+)\}/g) || []).map((el) => ({
@@ -148,16 +101,16 @@ Then("response body: {}", function (message) {
 Then("standard response body", function () {
   this.body = this.response.data;
   assert.equal(
-    this.body.status,
-    "success",
-    `Incorrect body.status -> "${
-      this.body.status
-    }" should be "success". Response is ${JSON.stringify(this.body)}`,
+    this.body.success,
+    true,
+    `Incorrect body.success -> "${
+      this.body.success
+    }" should be "true". Response is ${JSON.stringify(this.body)}`
   );
   assert.equal(
     typeof this.body.data,
     "object",
-    `Incorrect type of body.data. Response is ${JSON.stringify(this.body)}`,
+    `Incorrect type of body.data. Response is ${JSON.stringify(this.body)}`
   );
 });
 
@@ -170,8 +123,8 @@ Then(
       this.dataVal,
       undefined,
       `body.data.${key} should not be undefined. Response is ${JSON.stringify(
-        this.body,
-      )}`,
+        this.body
+      )}`
     );
     const errorMessage = `Incorrect type of body.data.${key} -> "${typeof this
       .dataVal}" should be "${type}". Response is ${JSON.stringify(this.body)}`;
@@ -180,7 +133,7 @@ Then(
     } else {
       assert.equal(typeof this.dataVal, type, errorMessage);
     }
-  },
+  }
 );
 
 Then(`each element should be a type of "{word}"`, function (type) {
@@ -188,7 +141,7 @@ Then(`each element should be a type of "{word}"`, function (type) {
     `Incorrect type of elements in body.data.${
       this.dataKey
     } -> "${typeof val}" should be "${type}". Response is ${JSON.stringify(
-      this.body,
+      this.body
     )}`;
   this.dataVal.forEach((val) => {
     if (type === "array") {
@@ -206,7 +159,7 @@ Then(`element has property "{word}": {}`, function (property, conditionsRaw) {
     assert.notEqual(
       val[property],
       undefined,
-      `Value of ${property} is not exist in ${JSON.stringify(val)}`,
+      `Value of ${property} is not exist in ${JSON.stringify(val)}`
     );
 
     const data = val[property];

@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { isValidAddress } = require("../helpers");
+const { isValidAddress, EntityNotFoundError } = require("../helpers");
 
 const router = new Router();
 
@@ -14,6 +14,11 @@ router.get("/:address", async (req, res, next) => {
     isValidAddress(address);
 
     const addressData = await trxService.getBalance(address);
+
+    if (!addressData) {
+      throw new EntityNotFoundError();
+    }
+
     return res.json({
       success: true,
       data: {
@@ -21,7 +26,6 @@ router.get("/:address", async (req, res, next) => {
       },
     });
   } catch (error) {
-    console.log("Error", error);
     return next(error);
   }
 });
