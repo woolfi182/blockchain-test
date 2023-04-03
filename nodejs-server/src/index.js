@@ -4,7 +4,7 @@ const { json } = require("body-parser");
 
 const { DbProvider } = require("./providers");
 const { TrxService } = require("./services");
-const { trxRouter } = require("./routers");
+const { trxRouter, balanceRouter } = require("./routers");
 
 const { PORT } = process.env;
 
@@ -24,6 +24,7 @@ const main = async () => {
   app.set("trxService", trxService);
 
   app.use("/transactions", trxRouter);
+  app.use("/balance", balanceRouter);
 
   app.listen(PORT, () => {
     console.log(`Example app listening at http://localhost:${PORT}`);

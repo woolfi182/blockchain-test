@@ -2,7 +2,7 @@ const { Router } = require("express");
 
 const router = new Router();
 
-const sortValues = ["byrecipient", "bysender"];
+const sortValues = ["recipient", "sender"];
 
 // For testing purposes basic validation is here
 const validatePage = (page) => {
@@ -22,7 +22,7 @@ router.get("/", async (req, res, next) => {
   // pagination
   const { page = 0 } = req.query;
   // by sender or recipient
-  const { sort = "bysender" } = req.query;
+  const { sort = "sender" } = req.query;
 
   try {
     validatePage(page);

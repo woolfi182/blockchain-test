@@ -1,20 +1,12 @@
-const getOrderByValue = (sort) => {
-  const orders = {
-    byrecipient: "to",
-    bysender: "from",
-  };
-
-  return orders[sort];
-};
+const Sequelize = require("sequelize");
 
 module.exports = class TrxService {
   constructor(db) {
     this.db = db;
   }
 
-  async getTransactions(page, sort) {
+  async getTransactions(page, orderBy) {
     const LIMIT = 100;
-    const orderBy = getOrderByValue(sort);
 
     const params = {
       limit: 100,
@@ -23,5 +15,16 @@ module.exports = class TrxService {
     };
 
     return this.db.models.TrxModel.findAll(params);
+  }
+
+  async getBalance(address) {
+    const params = {
+      where: {
+        [Sequelize.Op.or]: [{ sender: address }, { recipient: address }],
+      },
+      order: [["createdAt", "DESC"]],
+    };
+
+    return this.db.models.TrxModel.findOne(params);
   }
 };
