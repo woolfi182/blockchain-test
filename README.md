@@ -2,6 +2,12 @@
 
 The idea is to show possible way to gather data from EVM-compatable blockchains
 
+Table of Content (by questions):
+
+- A description of what you've built: [architecture](#architecture-design)
+- Which technologies you've used and how they tie together: [techs](#Technologies)
+- Your reasons for high-level decisions: still there [architecture](#architecture-design)
+
 ## How to start
 
 If you have `docker` installed, than `docker-compose` will run it for you.
@@ -46,10 +52,31 @@ You need to have one of the next API keys to reach endpoints:
 
 ## Architecture design
 
-I created a microservice to run it separately from server. The microservice gathers required data and don't bother the server or vise versa. Also, in case of something happened to server (bugs, or too many users come and we don't have a scaller), the microservice will still gather data.
+I created a microservice to gather required data and don't bother the server or vise versa. The microservice does 3 simple steps:
+
+- go to blockchain
+- gather data:
+  - get block data
+  - get each DAI transaction from the block
+  - get balances of recipient and sender of each of the transactions
+- store to db
+
+I created a server to have API endpints to users to use the gathered data. Endpoints described [here](#endpoints)
+
+Also, in case of something happened to server (bugs, or too many users come and we don't have a scaller), the microservice will still gather data.
 
 As both are separated and contenerised, it's possible to extend them and run using K8s to scale up/down in case of need.
 
 ## Tests
 
 In progress
+
+## Technologies
+
+For Microservice I used only `ethers.js` library to got to blockchain and `sequelize` to connect and store data in postgres. I didn't use any loggers here as it's just a simple test task and there is nothing to analyse.
+
+For Server I used:
+
+- `sequelize` to connect to DB
+- `express` for simple server
+- `swagger` for great documentation
