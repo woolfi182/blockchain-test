@@ -70,7 +70,12 @@ As both are separated and contenerised, it's possible to extend them and run usi
 
 ## Tests
 
-In progress
+To run tests, you need server to be running.
+
+```sh
+cd server
+npm run e2e
+```
 
 ## Technologies
 
