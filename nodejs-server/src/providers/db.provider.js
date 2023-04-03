@@ -24,7 +24,6 @@ module.exports = class DbProvider {
       this.db.models[modelName] = model(this.db);
     });
     this.db.sync({
-      force: true,
       alter: false,
     });
   }

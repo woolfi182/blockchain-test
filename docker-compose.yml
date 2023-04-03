@@ -41,10 +41,7 @@ services:
   node-microservice:
     build: node-microservice
     restart: always
-    ports:
-      - 3001:3001
     environment:
-      - PORT=3000
       - PG_HOST=host.docker.internal
       - PG_PORT=5432
       - PG_DB=tessera
