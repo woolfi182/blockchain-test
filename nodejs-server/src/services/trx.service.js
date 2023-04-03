@@ -3,9 +3,11 @@ module.exports = class TrxService {
     this.db = db;
   }
 
-  async getTransactions() {
+  async getTransactions(page = 0) {
+    const LIMIT = 100;
     return this.db.models.TrxModel.findAll({
       limit: 100,
+      offset: page * LIMIT,
       order: [["createdAt", "DESC"]],
     });
   }
