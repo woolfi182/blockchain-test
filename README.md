@@ -7,6 +7,7 @@ Table of Content (by questions):
 - A description of what you've built: [architecture](#architecture-design)
 - Which technologies you've used and how they tie together: [techs](#Technologies)
 - Your reasons for high-level decisions: still there [architecture](#architecture-design)
+- SQL queries are written [here](./request.sql)
 
 ## How to start
 

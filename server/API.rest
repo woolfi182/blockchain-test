@@ -4,7 +4,7 @@
 # Get Transactions
 # @name trxs
 GET {{server}}/api/v1/transactions
-x-api-key: key1
+x-api-key: key2
 
 
 @address={{trxs.response.body.data.transactions[0].sender}}
