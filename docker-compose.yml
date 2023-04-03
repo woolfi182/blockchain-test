@@ -36,6 +36,7 @@ services:
         condition: service_healthy
     volumes:
       - ./server/:/app
+      - /app/node_modules
 
 
   node-microservice:
@@ -53,3 +54,4 @@ services:
         condition: service_healthy
     volumes:
       - ./microservice/:/app
+      - /app/node_modules
