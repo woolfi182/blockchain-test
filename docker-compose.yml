@@ -19,27 +19,27 @@ services:
       start_period: 80s  
 
 
-  # node-server:
-  #   build: nodejs-server
-  #   restart: always
-  #   ports:
-  #     - 3001:3001
-  #   environment:
-  #     - PORT=3000
-  #     - PG_HOST=host.docker.internal
-  #     - PG_PORT=5432
-  #     - PG_DB=tessera
-  #     - PG_USER=tessera
-  #     - PG_PASSWORD=verysecretpassword
-  #   depends_on:
-  #     postgres:
-  #       condition: service_healthy
-  #   volumes:
-  #     - ./nodejs-server/:/app
+  node-server:
+    build: nodejs-server
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      - PORT=3000
+      - PG_HOST=host.docker.internal
+      - PG_PORT=5432
+      - PG_DB=tessera
+      - PG_USER=tessera
+      - PG_PASSWORD=verysecretpassword
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./nodejs-server/:/app
 
 
   node-microservice:
-    build: nodejs-server
+    build: node-microservice
     restart: always
     ports:
       - 3001:3001
