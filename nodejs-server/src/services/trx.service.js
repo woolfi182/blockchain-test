@@ -1,5 +1,3 @@
-const Sequelize = require("sequelize");
-
 const getOrderByValue = (sort) => {
   const orders = {
     byrecipient: "to",
@@ -19,11 +17,6 @@ module.exports = class TrxService {
     const orderBy = getOrderByValue(sort);
 
     const params = {
-      attributes: [
-        ["from", "sender"],
-        ["to", "recipient"],
-        [Sequelize.fn("sum", Sequelize.col("value")), "balance"],
-      ],
       limit: 100,
       offset: page * LIMIT,
       order: [[orderBy, "DESC"]],
