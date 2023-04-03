@@ -1,0 +1,14 @@
+@server=http://localhost:3000
+
+###
+# Get Transactions
+# @name trxs
+GET {{server}}/transactions
+x-api-key: key1
+
+
+@address={{trxs.response.body.data.transactions[0].sender}}
+###
+# Get balance
+GET {{server}}/balance/{{address}}
+x-api-key: key2
