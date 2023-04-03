@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
+const healthcheck = require("express-healthcheck");
 const yaml = require("yamljs");
 const { json } = require("body-parser");
 
@@ -12,6 +13,13 @@ const { apiLimiter, apiAuthentication, logRequest } = require("./middlewares");
 const { PORT } = process.env;
 
 const swaggerConfigPath = "./src/specs/api.yaml";
+
+const healthConfig = {
+  healthy: () => ({
+    healthy: true,
+    uptime: process.uptime(),
+  }),
+};
 
 const main = async () => {
   const dbProvider = new DbProvider();
@@ -31,6 +39,8 @@ const main = async () => {
 
   app.use(json());
   app.use(cors());
+
+  app.use("/healthcheck", healthcheck(healthConfig));
 
   // SWAGGER DOC part
   app.use("/docs", swaggerUi.serve);
