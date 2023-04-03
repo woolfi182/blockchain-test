@@ -3,9 +3,9 @@ const cors = require("cors");
 const { json } = require("body-parser");
 
 const { DbProvider } = require("./providers");
-const { TrxService } = require("./services");
+const { TrxService, LogsService } = require("./services");
 const { trxRouter, balanceRouter } = require("./routers");
-const { apiLimiter, apiAuthentication } = require("./middlewares/rate.mdlwr");
+const { apiLimiter, apiAuthentication, logRequest } = require("./middlewares");
 
 const { PORT } = process.env;
 
@@ -17,14 +17,19 @@ const main = async () => {
   dbProvider.initModels();
 
   const trxService = new TrxService(dbProvider.db);
+  const logsService = new LogsService(dbProvider.db);
 
   const app = express();
-  app.use(json());
-  app.use(cors());
-  app.use(apiAuthentication);
-  app.use(apiLimiter);
 
   app.set("trxService", trxService);
+  app.set("logsService", logsService);
+
+  app.use(json());
+  app.use(cors());
+
+  app.use(logRequest);
+  app.use(apiAuthentication);
+  app.use(apiLimiter);
 
   app.use("/transactions", trxRouter);
   app.use("/balance", balanceRouter);
