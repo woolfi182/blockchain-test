@@ -1,5 +1,4 @@
-# Project for Tessera
-
+# Test project using Blockchain
 The idea is to show possible way to gather data from EVM-compatable blockchains
 
 Table of Content (by questions):
