@@ -5,8 +5,8 @@ services:
     image: postgres
     environment:
       - POSTGRES_PASSWORD=verysecretpassword
-      - POSTGRES_USER=tessera
-      - POSTGRES_DB=tessera
+      - POSTGRES_USER=test
+      - POSTGRES_DB=test
     ports:
       - "5432:5432"
     volumes:
@@ -28,8 +28,8 @@ services:
       - PORT=3000
       - PG_HOST=host.docker.internal
       - PG_PORT=5432
-      - PG_DB=tessera
-      - PG_USER=tessera
+      - PG_DB=test
+      - PG_USER=test
       - PG_PASSWORD=verysecretpassword
     depends_on:
       postgres:
